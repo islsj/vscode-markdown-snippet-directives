@@ -1,0 +1,105 @@
+{
+	"private": true,
+	"name": "markdown-snippet-directives",
+	"displayName": "Markdown Snippet Directives",
+	"description": "Click button to execute the directive within the Markdown snippet",
+	"version": "0.2.4",
+	"license": "MIT",
+	"author": "islsj",
+	"publisher": "islsj",
+	"icon": "images/icon.jpg",
+	"engines": {
+		"vscode": "^1.67.0"
+	},
+	"categories": [
+		"Other",
+		"Snippets",
+		"Programming Languages"
+	],
+	"keywords": [
+		"markdown js",
+		"script",
+		"markdown run",
+		"markdown script",
+		"markdown code run",
+		"snippet directives",
+		"markdown directives",
+		"markdown snippet"
+	],
+	"activationEvents": [
+		"onLanguage:markdown"
+	],
+	"main": "./src/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "markdown-snippet-directives.run",
+				"title": "Run Directive"
+			}
+		],
+		"configuration": [
+			{
+				"title": "markdown-snippet-directives",
+				"properties": {
+					"markdown-snippet-directives.variables": {
+						"type": "array",
+						"default": [
+							[
+								"$$directive",
+								"ts-node"
+							]
+						],
+						"description": "定义代码片段环境变量",
+						"scope": "resource"
+					},
+					"markdown-snippet-directives.languages": {
+						"type": "array",
+						"default": [
+							[
+								"javascript|js",
+								{
+									"langExt": ".js",
+									"directivesMap": [
+										[
+											"run",
+											"node $$rootPathWithoutTrailingSlash/$$fileName"
+										]
+									]
+								}
+							],
+							[
+								"typescript|ts",
+								{
+									"langExt": ".ts",
+									"executorMap": [
+										"$$directive $$rootPathWithoutTrailingSlash/$$fileName"
+									]
+								}
+							]
+						],
+						"description": "设置每种语言的执行器。",
+						"scope": "resource"
+					}
+				}
+			}
+		]
+	},
+	"scripts": {
+		"prebuild": "cd ../.. && npm run build",
+		"build": "node scripts/build -- --minify",
+		"watch": "npm run build -- --watch",
+		"pack": "vsce package",
+		"publish": "vsce publish"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.67.0",
+		"@types/glob": "^8.1.0",
+		"@types/mocha": "^10.0.1",
+		"@types/node": "16.x",
+		"eslint": "^8.39.0",
+		"glob": "^8.1.0",
+		"mocha": "^10.2.0",
+		"typescript": "^5.0.4",
+		"@vscode/test-electron": "^2.3.0"
+	}
+}
